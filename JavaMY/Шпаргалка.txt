@@ -1,0 +1,264 @@
+
+		Константы 
+
+		public static final int MIN_GEAR = 1; публичные статичные неизменяемые, заглавные буквы с нижним подчеркиванием
+
+
+
+		методы со строками
+
+		Character.isUpperCase()  Проверяет то, что переданный символ в верхнем регистре 
+		Character.isLowerCase()  Проверяет то, что переданный символ в нижнем регистре 
+		Character.isDigit() Проверяет то, что переданный символ это число
+		Character.toLowerCase()  переводит символ в нижний регистр
+		Character.toUpperCase()  переводит символ в верхний регистр
+		.toLowerCase() // Приведение к нижнему регистру
+		.toUpperCase() // Приведение к верхнему регистру
+		.trim() // Удаление концевых пробельных символов также сиволов табуляции, переносов строки
+		.replace ("а", "х") // замена а на х
+		.replaceAll(yyy, zzz) замена
+		.startsWith() проверка начала строки на совпадение с тем что в скобках
+		.endsWith() проверяет последний символы
+		.substring(x,y) // Для извлечения частей строки от х до у, или от х до конца строки (х)	
+		.indexOf(xxx) или indexOf(';') или indexOf(xxx, yyy) поиск в строке , ууу - искать после ууу	(если совпадений нет возвращает -1)
+		 так же, но с конца строки
+		.charAt(х) // извлечение символа из строки
+		.length() длина строки (массива)
+		"*".repeat() провтор, в скобках кол-во раз		
+		.equals() сравнивать строки по значению, чем по ссылке.пример. name1.equals(name2); // true
+		.equalsIgnoreCase(),  выполняет проверку по значению без учета регистра
+		.equals(xxx.toString()) сравнение дат
+		StringUtils.reverse() перевернуть строку. пример StringUtils.reverse("мама"); // "амам"
+		String yyy[] = xxx.split(" "); разделение  строки по пробелам
+		.split() позволяет разбить строку на подстроки по определенному разделителю.
+		.isEmpty() проверка на символы пустая ли строка
+		.isBlank() проверка пустая ли строка с учетом пробела, переноса строки , табуляции и пр.
+		
+
+		Регулярные выражения  
+		String regex = "[A-Za-z][0-9]{3}" в квадратных скобках проверка на соответсвие, в фигурных - сколько символов
+		.matches(regex)	
+
+		Поиск соответсвия в строке
+		String text = "Егор Алла Александр";
+    		Pattern pattern = Pattern.compile("А.+а");
+    		Matcher matcher = pattern.matcher(text);
+    		while (matcher.find()) {
+        		System.out.println(text.substring(matcher.start(), matcher.end()));
+    		}
+		
+		Поиск соответсвия в строке
+		String regex = "https:\\/\\/[^,\\s]+; поиск https:// и до запятой или пробела
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(text);
+		while(matcher.find()) {
+			int start = matcher.start();
+			int end = matcher.end();
+			System.out.println(text.substring(start, end);// или
+
+		// Популярные регулярные вырыжения
+
+		только цифры ^[1-9]+[0-9]*$
+		номер карты [0-9]{13,16}
+		ICQ  ([1-9])+(?:-?\d){4,}
+		Номер телефона(Россия)  ^((\+7|7|8)+([0-9]){10})$
+		Номер телефона  ^(\+)?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){5,12}\d$
+		Фамилия+Имя или же ФИО полностью   ^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$
+		Набор из букв и цифр (латиница)  ^[a-zA-Z0-9]+$
+		Набор из букв и цифр (латиница + кириллица)  ^[а-яА-ЯёЁa-zA-Z0-9]+$
+		домен (например abcd.com)  ^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$
+		URL (например abcd.com):  (https?):((//)|(\\\\))+[\w\d:#@%/;$()~_?\+-=\\\.&]*
+		IPv4  ((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)
+		IPv6  ((^|:)([0-9a-fA-F]{0,4})){1,8}$
+		Имя пользователя (с ограничением 2-20 символов, которыми могут быть буквы и цифры, первый символ обязательно буква) ^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$
+		Пароль (Строчные и прописные латинские буквы, цифры)^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$
+		Пароль (Строчные и прописные латинские буквы, цифры, спецсимволы. Минимум 8 символов)  (?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$
+		Дата в формате YYYY-MM-DD  [0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])
+		Дата в формате DD/MM/YYYY  0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d
+		Дата в формате DD/MM/YYYY  \-?\d+(\.\d{0,})?
+		UUID  ^[0-9A-Fa-f]{8}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{12}$
+		Широта или долгота  -?\d{1,3}\.\d+
+		E-mail  ^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,3}$
+		URL на латинице. Если нужно распознавать и кириллические домены, необходимо изменить все «a-z0-9» на «а-яёa-z0-9» и добавить в список доменных зон «рф»
+~^(?:(?:https?|ftp|telnet)://(?:[a-z0-9_-]{1,32}(?::[a-z0-9_-]{1,32})?@)?)?(?:(?:[a-z0-9-]{1,128}\.)+(?:ru|su|com|net|org|mil|edu|arpa|gov|biz|info|aero|inc|name|[a-z]{2})|(?!0)(?:(?!0[^.]|255)[0-9]{1,3}\.){3}(?!0|255)[0-9]{1,3})(?:/[a-z0-9.,_@%&?+=\~/-]*)?(?:#[^ '\"&]*)?$~i
+
+		Время в формате HH:MM:SS ^([0-1]\d|2[0-3])(:[0-5]\d){2}$
+		Mac-адрес  ([0-9a-fA-F]{2}([:-]|$)){6}$|([0-9a-fA-F]{4}([.]|$)){3}
+
+		Способы объединения строк:
+		StringBuilder xxx = new StringBuilder();
+		xxx.append(yyy).append("\n");
+
+		xxx.concat(yyy); способ объединения строк 
+
+		Преобразование чисел с строки:
+		int age = 25;
+		String name = "Анна";
+		String value = Integer.toString(age);
+		Строк в числа:
+		Integer.parseInt()
+		Double.parseDouble()  и т.д.
+
+		Изменение кодировки:
+		= new String(xxx.getBytes(), StandartCharsets.US_ASCII);
+
+
+	матиматические
+		Math.random(xxx) возвращает случайное число от 0 до 1 с большим количеством знаков после запятой
+		Math.pow(num, 3) возведение в степень
+		Math.ceil(xxx) округление до целого числа в большую сторону
+		Math.floor(xxx) округляет до ближайшего целого вниз, также результатом отдаёт double
+		Math.round (xxx) — округляет до ближайшего целого числа, как результат отдаёт int
+		Math.PI
+		(Math.random()*((max-min)+1))+min; случайное число в заданном диапазоне
+
+	с датами
+		=LocalDate.now() сегодняшняя дата
+		=LocalDateTime.now() сегодняшняя дата и время
+		=LocalDateTime.now().minusDays(2) минус 2 дня
+		LocalDate dateFrom = LocalDate.of(2017, 04, 24); // установить дату
+		long noOfDaysBetween = ChronoUnit.DAYS.between(dateFrom, dateTo) //число дней между датами
+		.plusYears(18) прибавляет года(18)
+		time1.until(time2, ChronoUnit.Hours)) разница между датами в часах
+		time1.isBefore(time2) сравнение "до", isAfter "после"
+		time1.compare(time2) "0" даты равны, положительное если time1 больше, отрицательное - если меньше
+		=LocalDateTime.now(ZoneId.of("America/New_york")) получение времени в нужной часовой зоне
+		
+		Преобразование строки в объект:
+		String date = "26.02.1975";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.M.yyyy");
+      		LocalDate now = LocalDate.parse(birthday, formatter);
+		
+		обратно:
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.M.yyyy  HH:mm:ss E"); E день недели
+      		LocalDateTime now = LocalDateTime.now();
+		sout(formatter.format(now));
+
+		DayOfWeek.from(myBirthday) день недели из даты
+
+		= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM); предустановленные константы
+		= DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).LocalizeBy(new Locale("us") для вывода на другом языке
+		
+		текущая метка времени timestamp:
+		= System.currentTimeMillis();
+		= LocalDateTime.ofEpochSecond(секунды, наносекунды, часовой пояс) преобразование метки времени в дату (ZoneOffset.ofHours(3)
+		.toEpochSecond(ZoneOffset.ofHours(3)) преобразование даты в метку времени
+
+		Исключения
+		
+		try {
+			какой то код, где может произойти исключение ;
+		} catch (IllegalArgumentException ex) {   //в скобках вид исключения. Можно чтобы отлавливалиь все исключения (Excepction ex)
+			System.out.println(ex.getMassage());   //или ex.printStackTrace();
+		}
+		______________________________
+		if(проверка чего то) {
+			throw new IllegalArgumentException("сообщение пщльзователю об ошибке(исключении)"); создание исключения
+
+
+
+		Список операций сравнения в Java:
+
+   		< меньше
+   		<= меньше или равно
+  		> больше
+  		>= больше или равно
+   		== равно
+  		!= не равно
+
+		&& - означает «И»
+		|| — «ИЛИ»
+		! отрицание
+
+__________________________________________
+
+		Модульное тестирование 
+		подключение библиотеки junit через Maven
+		<dependency> 
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		<dependency> 
+
+_________________________________________
+
+		Работа с файлами 
+
+		File file = new File(path); создание объекта file с путем path
+		file.length() размер файла в байтах
+		File.lastModifield() время последних изменений в миллисекундах
+		File[] file = folder.listFiles(); получение массива из содержимого папки
+		.getAbsolutePath() получение пути к файлу(папке)
+		folder.mkdir() создание папки внутри папки folder
+
+		Чтение файлов (получение текста из файла) 3 способа ко всем нужны try - catch
+
+	1.	FileInputStream is = new FileInputStream("путь к файлу");
+		for(;;){
+		   int code = is.read(); получаем числовой код символа
+		   if(code < 0){     если code = -1 , значит символов больше нет
+			break;
+			}
+		   char ch = (char) code; преобразуем число в символ
+		   builder.append(ch);
+
+	2.	BufferedReader br = new BufferedReader(new FileReader("путь к файлу"));
+		for(;;){
+		   String line = br.readLine(); читает файл построчно
+		   if(line == 0){     если line = 0 , значит файл закончился
+			break;
+			}
+		   builder.append(line);
+
+	3.	List<String> lines = Files.readAllLines(Paths.get("путь"));
+		lines.forEach(line -> builder.append(line + "\n");
+
+		Запись в файл
+
+	1.	try{
+		PrintWriter writer = new PrintWriter("путь");
+		writer.write("строка");
+		writer.flush(); временное сохранение в буфере
+		writer.close(); запись из буфера в файл
+		}
+		catch (FileNotFoundExeption ex) {
+		   ex.printStackTrace();
+		}
+
+	2.	try{
+		ArrayList<String> strings = new ArrayList<>();
+		какой то код
+		string.add(что то добавлаем)
+		Files.write(Paths.get("путь"), strings); запись в файл
+		}
+		catch (FileNotFoundException ex) {
+		   ex.printStackTrace();
+		}
+	
+		
+	ПАРСИНГ JSON-файлов
+		try {
+                JSONParser parser = new JSONParser();
+                JSONObject jsonData = (JSONObject) parser.parse(СТРОКА); // если json файл начинается с { то создается объектJSON
+
+		JSONOArray jsonData = (JSONObject) parser.parse(СТРОКА); // если json файл начинается с [ то создается массивJSON
+	
+		Далее получаем  данные по ключу
+                JSONArray linesArray = (JSONArray) jsonData.get("lines"); // 
+                parseLines(linesArray);					 
+
+                JSONObject stationsObject = (JSONObject) jsonData.get("stations");  //  
+	        parseStations(stationsObject);                                         
+		
+
+           
+
+            JSONArray connectionsArray = (JSONArray) jsonData.get("connections");
+            parseConnections(connectionsArray);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+		
+
+
+

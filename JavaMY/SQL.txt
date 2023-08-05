@@ -1,0 +1,285 @@
+		
+
+	select запросы:
+		SELECT * FROM `tablename`; // получение всех данных из таблицы
+		SELECT `field_Id`, `fiel_name` FROM `tablename`; // получение нужных полей из таблицы
+		SELECT `field1`, `f1`, FROM `tablename`; // изменение названия поля field1 на f1
+		SELECT `name` , (`count` * `price`) `totalprice` FROM `good` WHERE 1; // вывод поля name и создание поля totalprice в котором произведение полей count и price
+											
+
+	where фильтрация:
+		SELECT `id`, `name` FROM `tablename` WHERE `count` = 0; // вывод полей id и name у которых поле count = 0;
+		SELECT * FROM `order_status` WHERE `code` != 'new'; если поле текстовое, то условие пишется в одинарных кавычках
+		SELECT `id`, `name`, `reg_date` FROM `user` WHERE `reg_date >= "2022-01-01"; // фильтрация по дате
+		формат дат 1.дата и время - YYYY-MM-DD HH:MM:SS 2. просто дата YYYY-MM-dd
+ 		SELECT * FROM `user` WHERE `reg_date >= "2022-01-01 00:00:00" AND `reg_date`<= "2022-01-01 23:59:59"; // фильтрация по диапазону
+		SELECT * FROM `user` WHERE `reg_date` BETWEEN "2022-01-01 00:00:00" AND "2022-12-31 23:59:59"; // тоже упрощенно
+
+		AND OR
+
+	Сортировка
+		SELECT * FROM `tablename` ORDER BY `name`; // сортировка по возрастанию
+		SELECT * FROM `tablename` ORDER BY `name` DESC; // сортировка по убыванию
+		SELECT * FROM `tablename` ORDER BY `price` DESC LIMIT 1; ограничение колличества вывода
+
+	JOIN объединение
+		SELECT `good_category` . `name`,
+			`good` . `name`,
+		FROM `good`
+		JOIN `good_category` ON 
+			`good_category`.`id` =
+			`good`.`category_id`;
+
+	DISTINCT Фильтрация по уникадьности и ГРУППИРОВКА по одному или нескольким полям
+		SELECT DISTINCT `status_id` FROM order; //получение уникальных status_id
+		SELECT DISTINCT `src_status_id`, `dst_status_id` FROM `order_status_id` GROUP BY `src_status_id`; //получение уникальных 
+			записей с группировкой по order_status_id
+		
+	
+	UNION Объединение запросов (должно быть ОДИНАКОВОЕ КОЛИЧЕСТВО ПОЛЕЙ)
+		SELECT 0.id, 0.creation_date
+		FROM `order` o
+		JOIN `order_statys` s ON s.id = o.`status_id`
+		WHERE s.`code` IN('APPROVED_BY_STOCK', 'PACKED")
+		ONION
+		SELECT 0.id, 0.creation_date
+		FROM `order` o
+		JOIN `user` u ON u.id = o.`user_id`
+		WHERE u.`reg_date` BETWEEN '2018-02-01 AND '2018-02-28
+		ONION
+		SELECT 0.id, 0.creation_date
+		FROM `good` g
+		JOIN `order2good` o2g ON o2g.`good_id` = g.`id`
+		WHERE g.`name` LIKE '%йогурт%';
+		
+	Добавление записей INSERT
+		INSERT INTO `good` (
+			`catagory_id`,
+			`name`,
+			`count`,
+			`price`
+		)
+		VALUES (
+			2088  (Если в таблице AUTO INCREMENT можно не указывать)
+			'6',
+			'Белый чай с вишней',
+			'50',
+			'344'
+		);
+	Множественная вставка 
+		INSERT INTO `tbl` (`name`, `price`)
+		VALUES ('Белый чай', '234'),
+		       ('Зеленый чай', `167`)
+		       ('Черный чай', '99');
+
+	Измениния данных в записях
+		UPDATE `good` set `name` = 'Конфета'
+		WHERE `id` = 1055;
+
+	Удаление записей
+		DELETE FROM `good`
+		WHERE `id` = 1373;
+
+	Выражения (операции с полями)
+		SELECT `name`, `price` * `count` AS cost  // выражение: `price` * `count`
+		FROM `good`;
+	или
+		SELECT `id`, `name`,
+		IF (`count` >= 100, 
+			'ENOUCH',
+			'NOT ENOUCH') isENOUCH
+		FROM `good`;
+
+
+	Функции (селект запрос с группировкой)
+		SELECT `category_id`, COUNT(*), // функция : COUNT(*)
+		FROM `good`
+		GROUP BY `category_id`;
+	еще основные :
+		Функции работы со строками
+		Функции работы с датой и временем	
+		Агрегатные функции - операции над значениями сразу в нескольких записях 
+
+	Оператор IF (cond, e1, e2)
+		SELECT `id`, `name`
+			IF (`count` < 20, `price` * 0.8, `price`) `price
+		FROM `good`
+		можно использовать AND и OR
+
+
+	Оператор CASE
+		SELECT `id`, `name`,
+			CASE
+				WHEN `count` < 20 THEN 'мало'
+				WHEN `count` > 500 THEN 'много'
+				ELSE 'нормально'
+			END `count`
+		FROM `good` THERE 1
+
+	Работа со строками 
+	Измерение длины сироки
+		SELECT `id`, `name`,
+			CHAR_LENGTH(`NAME`) `length`
+		FROM `good`
+
+	подстрока SUBSTRING SUBSTR (для обрезания строк)
+		SELECT `id`
+			SUBSTR(`name` 1, 20) `name` // 1- с какого символа будет обрезание, 20- сколько символов должно остаться ?? обрезать
+		FROM `good`
+
+	Конкатенация CONCAT(exp1, exp2, exp3, ...)
+		SELECT `id`
+			IF(
+				CHAR_LENGTH(`name`) > 20,
+				CONCAT(SUBSTR(`name`, 1, 20), '...'),
+				`name`
+			  )
+			`name`
+		FROM `good`
+
+	Конкотенация при группировке
+		SELECT o.id, GROUP_CONCAT(g.name SEPARATOR ', ') product
+		FROM `ordre` o
+		JOIN `order2dood` o2g ON o2g.order_id = o.id
+		JOIN `good` g ON g.id = o2g.good_id
+		GROUP BY i.id
+
+	Удаление пробелов по краям строки TRIM(str)
+		SELECT o.id, GROUP_CONCAT(TRIM(g.name) SEPARATOR ', ') product
+
+	Замена подстрок REPLACE(field, from, to)
+
+	Функции работы с датами
+	функция DATE_FORMAT(FIELD, FORMAT)
+	пример DATE_FORMAT(field, '%d.%m.%Y')
+	%H %m %s для часов минут секунд
+	%w дни недели 0-ВС 6-СБ
+	%j день в году 001-366
+
+	Динамика заказов по месецам
+		SELECT
+			DATE_FORMAT(creation_date, '%m') `month,
+			COUNT(*) `count`
+		FROM `order`
+		GROUP BY `month`
+		ORDER BY `month`
+
+	День недели DAYOFWEEK(date) , День года DAYOFYEAK(data), текущая дата и время NOW(), текущая дата CURDATE()
+	Разница между датами DATEDIFF(date2, date1)
+	Преобразование даты в метку времени UNIX_TIMESTAMP(date) и обратно FROM_ UNIXTIME(timestamp)
+
+	Агрегатные функции 
+		COUNT(*) подсчет всех записей
+		SUM(field) посчет сумм или например SELECT SUM(`price` * `count`) - общая сумма всех товаров
+		MIN(field)
+		MAX(field)
+		AVG(field) среднее значение
+
+	Группировка HAVING
+		SELECT o.id, SUM(o2g.count * g.price) `totalprice`
+		FROM `order` o
+		JOIN order2good o2g ON o2g.order_id = o.id
+		JOIN good g ON g.id = o2g.good_id
+		GROUP BY o.id
+		HAVING totalprice > 1000 // вывод всех заказов больше 1000 руб
+
+	Типы индексов в MySQL
+		BTREE для поиска по диапазонам
+		HASH для поиска для совпадениям
+
+		например CREATE TABLE `good_type` (
+				`id` INT NOT NULL AUTU_INCREMENT,
+				`name` VARCHAR(255),
+				PRIMARY KEY(`id`) установка ключа для быстрого поиска по id
+			);
+		если ключ не установлен, то можно установить позже
+			ALTER TABLE `goog`
+				ADD PEMARY KEY(`id)`;
+...........................................................
+
+	Индексы бывают 3-х видов: Первичный, Обычный, Уникальный
+
+	Запросы управления базами данных 
+		SHOW DATABASE; // просмореть список баз данных
+
+		USE `databaseName`; // перейти к нужной базе
+
+		CREATE DATABASE `databaseName`; // создание базы
+
+		DROP DATEBASE `datebaseName`; // удаление базы
+...........................................................
+
+	Запросы управления таблицами 
+		SHOW TABLE; // просмотр таблиц в базе
+
+		DESCRIBE `tableName`; // просмотр структуры таблицы
+
+		CREATE TABLE `good_type` ( // создание таблицы
+			`id` INT NOT NULL AUTU_INCREMENT,
+			`sort_index` INT,
+			`name` VARCHAR(255),
+			PRIMARY KEY(`id`) установка ключа для быстрого поиска по id
+		);
+
+		TRUNCATE `tableName`; // очистить таблицу
+
+		DROP TABLE `tableName`; // удалить таблицу
+...........................................................
+
+	Представление (результат запроса) виртуальные таблицы
+		CREATE VIEW `ending_goods` AS // создание представления с заканчивающимися товарами с ценой больше 200 р
+		SELECT * FROM `good`
+		WHERE `count` < 10 AND `price` > 200;
+
+		CREATE OR REPLACE VIEW // то же, но можно замений старое представление с новыми уловиями(или со старыми)
+			`ending_goods`
+
+		DROP VIEW `ending_goods`; // удаление представления
+_____________________________________________________________________________________
+
+
+	Получение данных от БД старый метод
+
+	public class Main {
+    private static final String URL = "jdbc:mysql://localhost:3306/skillbox";
+    private static final String USER = "root";
+    private static final String PASS = "andrey2675";
+
+    public static void main(String[] args) {
+        try {
+            Connection connection = DriverManager.getConnection(URL, USER, PASS);  
+            Statement statement = connection.createStatement();
+
+		//statement.executeUpdate("");	запрос на изменение в БД drop; Create; insert; set
+		//statement.executeQuery("");		запрос на получение данных из БД
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM courses");
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String coursename = resultSet.getString("name");
+                System.out.println(id + "\t" + coursename);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

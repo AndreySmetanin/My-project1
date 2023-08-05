@@ -1,0 +1,13 @@
+public class Main {
+    public static void main(String[] args) {
+        int maxWeght = 5000;
+        int minCost = 1000;
+
+        int weght = 3200;
+        int cost = 1750;
+
+        if (weght > maxWeght || cost < minCost) {
+            System.out.println("Доставка платная");
+        }
+    }
+}

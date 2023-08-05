@@ -1,0 +1,104 @@
+настройка после установки:
+git -v версия программы
+git config --global user.name "NAME" установка имени
+git config --global user.email "" установка емейл адреса
+git config --list вывод всех настроек
+ 
+начало работы:
+$ cd D:/NetBeans/JavaApplication9 переход в нужную папку
+ls -la просмотр содержимого папки
+git init создание репозитория в этой папке
+git log промотр всех изменений (вся история коммитов)
+
+$ git add .
+$ git commit -m 'initial' добавляем все папки и файлы в репозиторий с первым коммитом
+
+git show информация о последнем коммите
+
+$ git clone https://github.com/TheAlgorithms/Javagit clone https://github.com/TheAlgorithms/Java клонирование файлов(проекта) с репозитория
+
+cd c:/Users/Andrey/Java переход в папку со скаченным проектом
+
+git status команда показывает есть ли в проекте не сохраненные изменения
+Пример:		git status
+			On branch master
+			Your branch is up to date with 'origin/master'.
+		
+			nothing to commit, working tree clean
+изменений в проекте нет
+
+Пример после изменения в каком-нибудь файле:
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   pom.xml     										 <=== в каком файле произошли изменения
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+git add .
+git commit -m 'example commit'    две команды добовляют коммит(краткое описание изменений в проекте)
+
+git pull получение изменений и коммитов
+git push -u origin master      команда отправки изменений на сервер(в репозиторий) в ветку master
+
+git checkout -b my-brench создание локальной ветки my-brench и сразу переключение на нее
+
+git branch my-branch создание локальной ветки my-brench без перехода в нее
+
+git checkout master переключение обратно на ветку master
+
+git branch список веток в репозитории
+__________________________________________
+
+Создание удаленного репозиторя на GitHub или GitLAb делается на этих сайтах
+далее: 
+если нет локального репозитория:
+создаем на сайте в проете файл README.md, переходим в ГитБаш в нужную папку и слонируем проект как обычно
+
+или создаем локальную папку, в ней файл README.md и в ГитБаш прописываем сразу:
+
+echo "# My-project1" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/AndreySmetanin/My-project1.git
+git push -u origin main
+
+если есть локальный репозиторий:
+
+в Гитбаш переходим в папку проекта и прописываем:
+git remote add origin https://github.com/AndreySmetanin/My-project1.git
+git branch -M main
+git push -u origin main
+
+сменить веб-хостинг локального репозитория командой git remote set-url origin “адрес репозитория на новом хостинге”. Посмотреть актуальный текущий адрес можно командой git remote -v
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

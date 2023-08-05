@@ -1,0 +1,5 @@
+
+
+		InputMismatchException (англ. «несоответствие ввода»)
+ 		<Exception>, значит, произошло исключение.
+		 ArrayIndexOutOfBoundsException, что означает «ошибка выхода за границы массива». 

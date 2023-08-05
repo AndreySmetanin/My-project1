@@ -1,0 +1,31 @@
+ 
+// Создание сессии и транзакции
+StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+	  // какой то код
+
+
+        transaction.commit();
+        sessionFactory.close();
+    }
+_________________________________________________________________________________________
+
+// Получение всей таблицы
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<PurchaseList> query = builder.createQuery(PurchaseList.class);
+        Root<PurchaseList> root = query.from(PurchaseList.class);
+        List<PurchaseList> purchaseListList = session.createQuery(query).getResultList();
+_________________________________________________________________________________________
+
+// Добавление новой записи в таблицу 
+	  Course course = new Course();
+        course.setName("Новый курс");
+        course.setType(CourseType.DESIGN);
+        // и т.д.
+        session.persist(course);

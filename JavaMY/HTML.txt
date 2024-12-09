@@ -1,0 +1,31 @@
+В папке resources создать папку static, в ней html файл (index.html)
+
+В папке static создать папку css и в ней файл style.css. Для подключения этого файла необходимо в index.html в теге <head> прописать путь 
+к этому файлу <link rel="stylesheet" href="/css/style.css"
+
+Синтаксис HTML:
+<тег> контент </тег>
+<h1> - <h6>    теги заголовков. h1 самый крупный шрифт
+<a href="https://google.com"> GOOGLE </a>  тег а ссылка, href(в кавычках адрес ссылки)
+<a href="https://google.com" target="_blank> GOOGLE </a>     второе свойство тега а - target="_blank"  означает что переход по этой ссылке откроет новое окно в браузере
+
+
+Синтаксис CSS:
+
+	html, bode {
+	   height: 100%;  растянуть на всё окно браузера
+	   font-family: sans-serif;
+	   }
+
+	h1 {     к какому тегу применить стиль
+	   color: red;     атрибут: свойство (цвет букв красный)
+	   text-align: center;   (текст выровнять по центру)
+	   }
+
+Технология CSS FLEXBOX:
+
+body {
+     display: flex;
+     flexdirection: column;   располагать элементы колонкой
+     justify-content: center;
+     align-items: center;

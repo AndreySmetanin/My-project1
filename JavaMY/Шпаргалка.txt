@@ -117,7 +117,7 @@
 		=LocalDateTime.now() сегодняшняя дата и время
 		=LocalDateTime.now().minusDays(2) минус 2 дня
 		LocalDate dateFrom = LocalDate.of(2017, 04, 24); // установить дату
-		long noOfDaysBetween = ChronoUnit.DAYS.between(dateFrom, dateTo) //число дней между датами
+		long daysBetweenDates = ChronoUnit.DAYS.between(dateFrom, dateTo) //число дней между датами
 		.plusYears(18) прибавляет года(18)
 		time1.until(time2, ChronoUnit.Hours)) разница между датами в часах
 		time1.isBefore(time2) сравнение "до", isAfter "после"
@@ -125,7 +125,7 @@
 		=LocalDateTime.now(ZoneId.of("America/New_york")) получение времени в нужной часовой зоне
 		
 		Преобразование строки в объект:
-		String date = "26.02.1975";
+		String birthday = "26.02.1975";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.M.yyyy");
       		LocalDate now = LocalDate.parse(birthday, formatter);
 		
@@ -153,7 +153,7 @@
 		}
 		______________________________
 		if(проверка чего то) {
-			throw new IllegalArgumentException("сообщение пщльзователю об ошибке(исключении)"); создание исключения
+			throw new IllegalArgumentException("сообщение пользователю об ошибке(исключении)"); создание исключения
 
 
 

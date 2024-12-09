@@ -1,0 +1,27 @@
+Создаем класс для рекурсивной задачи, extends RecursiveTask<тип >
+
+Реализовать метод @Override compute
+
+Пример:
+public class NodeValueSumCalculator extends RecursiveTask<long>{
+	private Node node;
+	public NodeValueSumCalculator(Node Node){
+		this.node = node;
+	}
+	@Override
+	protected long compute(){
+		long sum = node.getValue;
+		List<NodeValueSumCalculator> taskList = new ArrayList<>();
+		for(Node child : task){
+			NodeValueSumCalculator task = new NodeValueSumCalculator(child)
+			task.fork();
+			tasklist.add(task);
+		}
+		for(NodeValueSumCalculator task : taskList){
+			sum += task.join();
+		}
+	return sum;
+
+Запуск
+Node root = 
+ForkJoinPool.invoke(new NodeValueSumCalculator(root);

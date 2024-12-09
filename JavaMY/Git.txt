@@ -15,7 +15,7 @@ $ git commit -m 'initial' добавляем все папки и файлы в 
 
 git show информация о последнем коммите
 
-$ git clone https://github.com/TheAlgorithms/Javagit clone https://github.com/TheAlgorithms/Java клонирование файлов(проекта) с репозитория
+$ git clone https://github.com/TheAlgorithms/Java клонирование файлов(проекта) с репозитория
 
 cd c:/Users/Andrey/Java переход в папку со скаченным проектом
 

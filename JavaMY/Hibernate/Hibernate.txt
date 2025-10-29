@@ -1,19 +1,127 @@
  
-// Создание сессии и транзакции
+простое подключение к БД и выполнение запроса
+
+public static void main( String[] args )
+    {
+        String url = "jdbc:mysql://localhost:3306/cat";
+        String user = "root";
+        String password = "andrey2675";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Cat");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString("nickname"));
+            }
+	
+            resultSet.close();
+            statement.close();
+            connection.close();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+____________________________________________________________________________________________
+
+Hibernate ORM
+Создать в папке resources файл hibernate.cgf.xml 
+Создать класс (POJO) сответствующий полям таблицы
+
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/skillbox?useSSL=false</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">testtest</property>
+        <!-- JDBC connection pool settings ... using built-in test pool -->
+        <property name="connection.pool_size">10</property>
+        <!-- Select our SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <!-- Echo the SQL to stdout -->
+        <property name="show_sql">true</property>
+        <!-- Set the current session context -->
+        <property name="current_session_context_class">thread</property>
+        <!-- Validate database schema -->
+        <property name="hbm2ddl.auto">validate</property>
+
+        <mapping class="Course"></mapping>
+    </session-factory>
+</hibernate-configuration>
+
+
+
+// Создание сессии
 StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure("hibernate.cfg.xml").build();
         Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
 
         Session session = sessionFactory.openSession();
+	Course course = session.get(Course.class, 1);  //получение объкта (курс) из базы с id 1
+	
+	session.close();
+        sessionFactory.close();
+    }
+________________________________________________________________
+
+// Создание сессии и транзакции (тразакции для внесение изменеий в базу, множество запросов сразу)
+
+StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml").build();
+        Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
+        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
+
+        Session session = sessionFactory.openSession();
+	
         Transaction transaction = session.beginTransaction();
 
 	  // какой то код
-
+	например создать новую запись в таблице
+		Course course = new course();
+		course.setName(Astrology);
+		остальные сеты
+		
+		transaction.save(course);
 
         transaction.commit();
+        session.close();
         sessionFactory.close();
+
     }
+
+___________________________________________________________________________
+
+связь многие к одному.
+создать POJO класс для связи с таблицей
+и добавить это поле
+
+@ManyToOne(cascade = CascadeType.ALL)
+private ...(например Ticher ticher)
+
+____________________________________________________________________________
+
+
+связь многие ко многм
+
+@ManeToMany(cascade = CascadeType.ALL)
+@JoinTable(name = "Subsciption",
+	joinColumns = {@joinColumn (name = "course_id)"},
+	inverseJoinColumn = {@joinColumn (name = "student_id)} 
+private List<Student> students;
+
+_________________________________________________________________________________________
+
+Ленивая загрузка 
+когда не надо получать данные из связанной таблицы , т.е. не создавать не нужные запросы к БД
+
+@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
 _________________________________________________________________________________________
 
 // Получение всей таблицы
@@ -24,7 +132,7 @@ ________________________________________________________________________________
 _________________________________________________________________________________________
 
 // Добавление новой записи в таблицу 
-	  Course course = new Course();
+	Course course = new Course();
         course.setName("Новый курс");
         course.setType(CourseType.DESIGN);
         // и т.д.

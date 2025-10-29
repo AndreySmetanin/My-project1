@@ -9,6 +9,10 @@
 
 	where фильтрация:
 		SELECT `id`, `name` FROM `tablename` WHERE `count` = 0; // вывод полей id и name у которых поле count = 0;
+
+		SELECT * FROM persons.new where name = 'Ivor Castaneda';
+		SELECT email FROM persons.new where name = 'Ivor Castaneda';
+
 		SELECT * FROM `order_status` WHERE `code` != 'new'; если поле текстовое, то условие пишется в одинарных кавычках
 		SELECT `id`, `name`, `reg_date` FROM `user` WHERE `reg_date >= "2022-01-01"; // фильтрация по дате
 		формат дат 1.дата и время - YYYY-MM-DD HH:MM:SS 2. просто дата YYYY-MM-dd
@@ -30,7 +34,7 @@
 			`good_category`.`id` =
 			`good`.`category_id`;
 
-	DISTINCT Фильтрация по уникадьности и ГРУППИРОВКА по одному или нескольким полям
+	DISTINCT Фильтрация по уникальности и ГРУППИРОВКА по одному или нескольким полям
 		SELECT DISTINCT `status_id` FROM order; //получение уникальных status_id
 		SELECT DISTINCT `src_status_id`, `dst_status_id` FROM `order_status_id` GROUP BY `src_status_id`; //получение уникальных 
 			записей с группировкой по order_status_id
@@ -72,7 +76,10 @@
 		       ('Зеленый чай', `167`)
 		       ('Черный чай', '99');
 
-	Измениния данных в записях
+	Добавление колонки
+	ALTER TABLE customers ADD COLUMN phone VARCHAR(20) UNIQUE;
+
+	Изменения данных в записях
 		UPDATE `good` set `name` = 'Конфета'
 		WHERE `id` = 1055;
 
